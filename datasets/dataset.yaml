@@ -1,0 +1,5 @@
+train: D:/ĐHGTVT/ChuyenDeHTGTTM/license-plate-recognition/datasets/images/train
+val: D:/ĐHGTVT/ChuyenDeHTGTTM/license-plate-recognition/datasets/images/val
+
+nc: 1 
+names: ["license-plate-number"]
