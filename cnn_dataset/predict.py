@@ -1,20 +1,24 @@
 import cv2
 import numpy as np
-import tensorflow as tf
-from config import CHARS, IMG_SIZE, MODEL_PATH
+from tensorflow.keras.models import load_model
+from train import *
 
-# Load model
-model = tf.keras.models.load_model(MODEL_PATH)
+def predict_character(image_path, model, class_indices):
+    img = cv2.imread(image_path)
+    img = cv2.resize(img, (28, 28))
+    img = img / 255.0
+    img = np.expand_dims(img, axis=0)
 
-def predict_character(img_path):
-    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    img = cv2.resize(img, IMG_SIZE) / 255.0  # Chuẩn hóa
-    img = img.reshape(1, IMG_SIZE[0], IMG_SIZE[1], 1)
+    predictions = model.predict(img)
+    class_id = np.argmax(predictions, axis=1)[0]
+
+    inv_class_indices = {v: k for k, v in class_indices.items()}
+    character = inv_class_indices[class_id]
     
-    prediction = model.predict(img)
-    predicted_label = np.argmax(prediction)
-    return CHARS[predicted_label]
+    return character
 
-# Test với ảnh mới
-img_path = "test_image/1_LP_sample.png"  # Cập nhật đường dẫn ảnh
-print("🔍 Dự đoán ký tự:", predict_character(img_path))
+model = load_model('license_plate_character_model.h5')
+
+# Sử dụng model
+character = predict_character('test.jpg', model, train_generator.class_indices)
+print("Ký tự dự đoán:", character)
