@@ -1,6 +1,6 @@
 import cv2
 import pytesseract
-import argparse
+import pytesseractpytesseract
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np

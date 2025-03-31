@@ -19,10 +19,10 @@ yolo_license_plate = YOLO("model/LP_ocr.pt")
 yolo_license_plate.conf = 0.60
 
 img = cv2.imread(args.image)
-plates = yolo_LP_detect(img, size=640)
+plates = yolo_LP_detect(img)
 
-plates = yolo_LP_detect(img, size=640)
-list_plates = plates.pandas().xyxy[0].values.tolist()
+plates = yolo_LP_detect(img)
+list_plates = plates.predict().xyxy[0].values.tolist()
 list_read_plates = set()
 if len(list_plates) == 0:
     lp = helper.read_plate(yolo_license_plate,img)
