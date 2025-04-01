@@ -44,10 +44,11 @@ while True:
         text_x = x1 + (x2 - x1) // 2 - text_size[0] // 2  # Căn giữa theo chiều ngang
         text_y = y1 + (y2 - y1) // 2 + text_size[1] // 2  # Căn giữa theo chiều dọc
         
-        cv2.rectangle(frame, (text_x - 5, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5), (0, 0, 0), -1)
-
+        # cv2.rectangle(frame, (text_x - 5, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5), (0, 0, 0), -1)
         # Hiển thị chuỗi ký tự nhận diện trên ảnh
-        cv2.putText(frame, plate_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        # cv2.putText(frame, plate_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(frame, plate_text, ((int(plate[0]), int(plate[1]-10))), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
+
 
     # Hiển thị video real-time
     cv2.imshow("License Plate Recognition", frame)

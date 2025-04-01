@@ -31,15 +31,24 @@ for plate in plate_results[0].boxes.xyxy:
     # ======== BƯỚC 2: Phát hiện ký tự trên biển số ========
     # rc_image = cv2.imread("crop.jpg")
     char_results = char_detector(plate_img)
-
     detected_chars = []
     for char in char_results[0].boxes.xyxy:
         cx, cy, w, h = map(int, char.tolist())
         cls = int(char_results[0].boxes.cls[0])
         detected_chars.append((cx, char_results[0].names[cls])) 
-
+      
     detected_chars.sort(key=lambda c: c[0])
-    plate_text = "".join(c[1] for c in detected_chars)
+    # plate_text = "".join(c[1] for c in detected_chars)
+    # ========== Lọc ký tự bị lặp ========================
+    filtered_chars = []
+    last_x = -999  # Lưu vị trí x của ký tự trước đó
+    
+    for cx, char in sorted(detected_chars, key=lambda c: c[0]):  
+        if abs(cx - last_x) > 5:  # Nếu ký tự cách xa ký tự trước đó
+            filtered_chars.append(char)
+            last_x = cx  
+            
+    plate_text = "".join(filtered_chars)
     print("Plate text: ",plate_text)
     cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
     #cv2.putText(image, plate_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
@@ -47,8 +56,8 @@ for plate in plate_results[0].boxes.xyxy:
     text_size = cv2.getTextSize(plate_text, cv2.FONT_HERSHEY_SIMPLEX, 1, 2)[0]
     text_x = x1 + (x2 - x1) // 2 - text_size[0] // 2  # Căn giữa theo chiều ngang
     text_y = y1 + (y2 - y1) // 2 + text_size[1] // 2  # Căn giữa theo chiều dọc
-    cv2.rectangle(image, (text_x - 5, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5), (0, 0, 0), -1)
-    cv2.putText(image, plate_text, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
+    # cv2.rectangle(image, (text_x - 5, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5), (0, 0, 0), -1)
+    cv2.putText(image, plate_text, ((int(plate[0]), int(plate[1]-10))), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
     
 # Lưu ảnh kết quả
 cv2.imwrite(args.output, image)
