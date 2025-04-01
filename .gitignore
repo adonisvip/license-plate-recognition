@@ -4,3 +4,4 @@ char_dataset/
 cnn_dataset/
 dataset/
 OCR/
+*dataset*/
