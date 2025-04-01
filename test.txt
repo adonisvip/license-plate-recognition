@@ -1,4 +1,5 @@
 python LP_detector_image.py --image test_image/101.jpg
+py LP_detector_image.py --image test_image/101.jpg
 py test.py --image test_image/101.jpg
 
 yolo train model=yolov8n.pt data=letter_detect.yaml epochs=100 imgsz=640  batch=16

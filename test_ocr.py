@@ -2,7 +2,7 @@ import cv2
 from ultralytics import YOLO
 
 # Load mô hình OCR
-char_detector = YOLO("model/last.pt")  
+char_detector = YOLO("model/LP_ocr.pt")  
 
 # Đọc ảnh biển số (ảnh đã cắt)
 plate_img = cv2.imread("crop.jpg")  # Thay bằng đường dẫn ảnh biển số
