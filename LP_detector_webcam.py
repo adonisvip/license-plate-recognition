@@ -37,12 +37,22 @@ while True:
 
         # Sắp xếp ký tự từ trái sang phải
         detected_chars.sort(key=lambda c: c[0])
-        plate_text = "".join(c[1] for c in detected_chars)
+        #plate_text = "".join(c[1] for c in detected_chars)
+        
+        filtered_chars = []
+        last_x = -999  # Lưu vị trí x của ký tự trước đó
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
         
-        text_size = cv2.getTextSize(plate_text, cv2.FONT_HERSHEY_SIMPLEX, 1, 2)[0]
-        text_x = x1 + (x2 - x1) // 2 - text_size[0] // 2  # Căn giữa theo chiều ngang
-        text_y = y1 + (y2 - y1) // 2 + text_size[1] // 2  # Căn giữa theo chiều dọc
+        for cx, char in sorted(detected_chars, key=lambda c: c[0]):  
+          if abs(cx - last_x) > 5:  # Nếu ký tự cách xa ký tự trước đó
+              filtered_chars.append(char)
+              last_x = cx  
+            
+        plate_text = "".join(filtered_chars)
+        
+        # text_size = cv2.getTextSize(plate_text, cv2.FONT_HERSHEY_SIMPLEX, 1, 2)[0]
+        # text_x = x1 + (x2 - x1) // 2 - text_size[0] // 2  # Căn giữa theo chiều ngang
+        # text_y = y1 + (y2 - y1) // 2 + text_size[1] // 2  # Căn giữa theo chiều dọc
         
         # cv2.rectangle(frame, (text_x - 5, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5), (0, 0, 0), -1)
         # Hiển thị chuỗi ký tự nhận diện trên ảnh
