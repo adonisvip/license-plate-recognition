@@ -87,8 +87,8 @@ python LP_detector_webcam.py
 
 ## 🖼️ Sample Results
 
-![License Plate Detection Example](image.png)
-![Character Recognition Example](image-1.png)
+![License Plate Detection Example](result/result1.png)
+![Character Recognition Example](result/result2.png)
 
 ## 🤝 Contributing
 

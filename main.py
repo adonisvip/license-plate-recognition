@@ -34,12 +34,12 @@ def main():
     try:
         if args.image:
             # Xử lý ảnh
-            output_path = f"{args.output}.jpg"
+            output_path = f"result/{args.output}.jpg"
             process_image(args.image, output_path, plate_detector, char_detector)
             
         elif args.video:
             # Xử lý video từ file
-            output_path = f"{args.output}.mp4"
+            output_path = f"result/{args.output}.mp4"
             process_video(args.video, output_path, plate_detector, char_detector)
             
         elif args.webcam:

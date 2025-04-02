@@ -9,7 +9,7 @@ def process_frame(frame, plate_detector, char_detector):
         
         # Cắt ảnh biển số
         plate_img = frame[y1:y2, x1:x2].copy()
-        cv2.imwrite("crop.jpg", plate_img)
+        cv2.imwrite("result/crop.jpg", plate_img)
         if plate_img is None or plate_img.size == 0:
             print("⚠ Không thể cắt biển số, bỏ qua.")
             continue
