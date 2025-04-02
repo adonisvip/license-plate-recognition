@@ -1,5 +1,4 @@
 import cv2
-import torch
 from ultralytics import YOLO
 from function.sort_charater import sort_by_rows
 
