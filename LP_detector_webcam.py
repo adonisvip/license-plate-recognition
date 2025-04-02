@@ -40,7 +40,7 @@ while True:
 
         plate_text = sort_by_rows(detected_chars)
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
-        cv2.putText(frame, plate_text, ((int(plate[0]), int(plate[1]-10))), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
+        cv2.putText(frame, plate_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
 
     cv2.imshow("License Plate Recognition", frame)
 
