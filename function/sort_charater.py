@@ -1,7 +1,6 @@
 import numpy as np
 
 def sort_by_rows(chars):
-    """ Sắp xếp ký tự theo hàng (trên xuống dưới) và cột (trái sang phải). """
     if not chars:
         return ""
 
@@ -27,8 +26,16 @@ def sort_by_rows(chars):
         rows.append(current_row)
 
     # Sắp xếp từng hàng theo x_min (trái sang phải)
-    sorted_chars = []
-    for row in rows:
-        sorted_chars.extend(sorted(row, key=lambda c: c[0][0]))  # Sắp xếp theo x_min
+    # sorted_chars = []
+    # for row in rows:
+    #     sorted_chars.extend(sorted(row, key=lambda c: c[0][0]))  # Sắp xếp theo x_min
 
-    return "".join(c[1] for c in sorted_chars)
+    # return "".join(c[1] for c in sorted_chars)
+
+    plate_text_parts = []
+    for row in rows:
+        sorted_row = sorted(row, key=lambda c: c[0][0])
+        plate_text_parts.append("".join(c[1] for c in sorted_row))
+
+    # Ghép các hàng lại với dấu '.'
+    return " ".join(plate_text_parts)

@@ -14,13 +14,13 @@ def main():
 
     # Kiểm tra tham số đầu vào
     if not args.image and not args.video and not args.webcam:
-        print("❌ Vui lòng cung cấp đường dẫn ảnh, video hoặc sử dụng webcam!")
+        print("❌ Please provide photo, video link or use webcam!")
         parser.print_help()
         sys.exit(1)
 
     # Kiểm tra xung đột tham số
     if args.webcam and (args.image or args.video):
-        print("❌ Không thể sử dụng webcam cùng lúc với ảnh hoặc video!")
+        print("❌ Cannot use webcam at the same time as photo or video!")
         sys.exit(1)
 
     # Khởi tạo các model detector
@@ -28,7 +28,7 @@ def main():
         plate_detector = YOLO("model/LP_detector.pt")
         char_detector = YOLO("model/LP_ocr.pt")
     except Exception as e:
-        print(f"❌ Lỗi khi khởi tạo model: {str(e)}")
+        print(f"❌ Error initializing model: {str(e)}")
         sys.exit(1)
 
     try:
@@ -47,7 +47,7 @@ def main():
             process_video(None, None, plate_detector, char_detector, save_output=False)
             
     except Exception as e:
-        print(f"❌ Lỗi: {str(e)}")
+        print(f"❌ Error: {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

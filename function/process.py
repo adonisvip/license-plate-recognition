@@ -4,7 +4,6 @@ from function.process_frame import process_frame
 import sys
 
 def process_image(image_path, output_path, plate_detector, char_detector):
-    """Xử lý ảnh đầu vào"""
     frame = cv2.imread(image_path)
     if frame is None:
         raise ValueError("Không thể đọc ảnh. Kiểm tra đường dẫn!")
@@ -43,14 +42,14 @@ def process_video(video_path, output_path, plate_detector, char_detector, save_o
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
 
-    print("✅ Đang xử lý video...")
-    print("Nhấn 'q' để thoát")
+    print("✅ Video processing in progress...")
+    print("Press 'q' to exit")
 
     try:
         while True:
             ret, frame = cap.read()
             if not ret:
-                print("❌ Không thể đọc frame!")
+                print("❌ Cannot read frame!")
                 break
 
             processed_frame = process_frame(frame, plate_detector, char_detector)
@@ -64,7 +63,7 @@ def process_video(video_path, output_path, plate_detector, char_detector, save_o
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
     except KeyboardInterrupt:
-        print("\n⚠ Đã dừng xử lý video theo yêu cầu người dùng")
+        print("\n⚠ Stopped processing videos on user request")
     finally:
         # Giải phóng tài nguyên
         cap.release()
@@ -72,4 +71,4 @@ def process_video(video_path, output_path, plate_detector, char_detector, save_o
             out.release()
         cv2.destroyAllWindows()
         if save_output:
-            print(f"✅ Video kết quả đã được lưu tại {output_path}")
+            print(f"✅The resulting video has been saved at {output_path}")
