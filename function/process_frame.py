@@ -25,7 +25,6 @@ def process_frame(frame, plate_detector, char_detector):
             if conf > 0.5:  # Lọc ký tự có độ tin cậy cao
                 detected_chars.append(((x_min, y_min, y_max), label))  # Lưu (x_min, y_min, y_max)
 
-        # ======== SẮP XẾP KÝ TỰ ========
         # Nhận diện biển số đầy đủ
         plate_text = sort_by_rows(detected_chars)
         print("Plate text:", plate_text)

@@ -21,15 +21,6 @@ def process_image(image_path, output_path, plate_detector, char_detector):
     cv2.destroyAllWindows()
 
 def process_video(video_path, output_path, plate_detector, char_detector, save_output=True):
-    """Xử lý video đầu vào hoặc webcam
-    
-    Args:
-        video_path (str): Đường dẫn đến file video. Nếu là None thì sử dụng webcam
-        output_path (str): Đường dẫn lưu file kết quả
-        plate_detector: Model phát hiện biển số xe
-        char_detector: Model nhận dạng ký tự
-        save_output (bool): Có lưu output hay không (mặc định: True)
-    """
     # Khởi tạo video capture
     if video_path is None:  # Sử dụng webcam
         cap = cv2.VideoCapture(0)

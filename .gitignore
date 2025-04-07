@@ -1,7 +1,9 @@
 labelImg/
-letter_dataset/
-char_dataset/
-cnn_dataset/
+lp_dataset/
+lp_dataset_old/
+lp_letter_dataset/
+lp_ocr_dataset/
 dataset/
 OCR/
-*dataset*/
+*dataset*/\
+*pycache*/
