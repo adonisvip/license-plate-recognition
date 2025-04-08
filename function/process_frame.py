@@ -2,19 +2,16 @@ from function.sort_charater import sort_by_rows
 import cv2
 
 def process_frame(frame, plate_detector, char_detector):
-    # ======== BƯỚC 1: Phát hiện biển số ========
     plate_results = plate_detector(frame)
     for plate in plate_results[0].boxes.xyxy:
         x1, y1, x2, y2 = map(int, plate.tolist())
         
-        # Cắt ảnh biển số
         plate_img = frame[y1:y2, x1:x2].copy()
         cv2.imwrite("result/crop.jpg", plate_img)
         if plate_img is None or plate_img.size == 0:
             print("⚠ Không thể cắt biển số, bỏ qua.")
             continue
 
-        # ======== BƯỚC 2: Phát hiện ký tự trên biển số ========
         char_results = char_detector(plate_img)
         detected_chars = []
 
@@ -22,10 +19,9 @@ def process_frame(frame, plate_detector, char_detector):
             x_min, y_min, x_max, y_max = map(int, box.tolist())
             label = char_results[0].names[int(cls)]
 
-            if conf > 0.5:  # Lọc ký tự có độ tin cậy cao
-                detected_chars.append(((x_min, y_min, y_max), label))  # Lưu (x_min, y_min, y_max)
+            if conf > 0.5:
+                detected_chars.append(((x_min, y_min, y_max), label))
 
-        # Nhận diện biển số đầy đủ
         plate_text = sort_by_rows(detected_chars)
         print("Plate text:", plate_text)
 

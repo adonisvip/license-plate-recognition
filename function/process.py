@@ -10,33 +10,28 @@ def process_image(image_path, output_path, plate_detector, char_detector):
 
     processed_frame = process_frame(frame, plate_detector, char_detector)
     
-    # Lưu ảnh kết quả
     cv2.imwrite(output_path, processed_frame)
     print(f"✅ Ảnh kết quả đã được lưu tại {output_path}")
     
-    # Hiển thị kết quả
     cv2.imshow('License Plate Recognition', processed_frame)
     cv2.waitKey()
     cv2.destroyAllWindows()
 
 def process_video(video_path, output_path, plate_detector, char_detector, save_output=True):
-    # Khởi tạo video capture
-    if video_path is None:  # Sử dụng webcam
+    if video_path is None: 
         cap = cv2.VideoCapture(0)
         if not cap.isOpened():
             raise ValueError("❌ Không thể mở camera!")
         print("✅ Đã kết nối camera thành công!")
-    else:  # Sử dụng video file
+    else: 
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
             raise ValueError("Không thể đọc video. Kiểm tra đường dẫn!")
 
-    # Lấy thông tin video
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
 
-    # Tạo video writer nếu cần lưu output
     out = None
     if save_output:
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
@@ -54,18 +49,15 @@ def process_video(video_path, output_path, plate_detector, char_detector, save_o
 
             processed_frame = process_frame(frame, plate_detector, char_detector)
             
-            # Lưu frame nếu cần
             if save_output and out is not None:
                 out.write(processed_frame)
             
-            # Hiển thị frame
             cv2.imshow('License Plate Recognition', processed_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
     except KeyboardInterrupt:
         print("\n⚠ Stopped processing videos on user request")
     finally:
-        # Giải phóng tài nguyên
         cap.release()
         if out is not None:
             out.release()

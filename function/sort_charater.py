@@ -4,19 +4,17 @@ def sort_by_rows(chars):
     if not chars:
         return ""
 
-    # Xác định khoảng cách giữa các hàng dựa trên chiều cao ký tự
     heights = [y_max - y_min for (_, y_min, y_max), _ in chars]
-    avg_height = np.mean(heights) * 0.6  # Ngưỡng để xác định hàng
+    avg_height = np.mean(heights) * 0.6 
 
-    # Nhóm ký tự theo hàng
     rows = []
     current_row = []
-    for char in sorted(chars, key=lambda c: c[0][1]):  # Sắp xếp theo y_min trước
+    for char in sorted(chars, key=lambda c: c[0][1]): 
         if not current_row:
             current_row.append(char)
         else:
             prev_y_min = current_row[-1][0][1]
-            if char[0][1] - prev_y_min > avg_height:  # Nếu cách xa, coi như hàng mới
+            if char[0][1] - prev_y_min > avg_height:
                 rows.append(current_row)
                 current_row = [char]
             else:
@@ -37,5 +35,4 @@ def sort_by_rows(chars):
         sorted_row = sorted(row, key=lambda c: c[0][0])
         plate_text_parts.append("".join(c[1] for c in sorted_row))
 
-    # Ghép các hàng lại với dấu '.'
     return " ".join(plate_text_parts)
